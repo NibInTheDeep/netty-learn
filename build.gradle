@@ -11,7 +11,7 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 /**
- *指定目标编译的Java版本
+ * 指定目标编译的Java版本
  */
 
 targetCompatibility = 1.8
