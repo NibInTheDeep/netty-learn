@@ -1,14 +1,15 @@
-package com.sunk.netty.first;
+package com.sunk.netty.secondexample;
 
+import com.sunk.netty.firstexample.TestServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-public class TestServer {
+public class MyServer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         //请求接受处理线程池
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         //请求处理线程池
@@ -20,11 +21,13 @@ public class TestServer {
             //定义好通道
             //定义子处理器
             serverBootstrap.group(bossGroup, workGroup).channel(NioServerSocketChannel.class)
-                    .childHandler(new TestServerInitializer());
+                    .childHandler(new MyServerInitializer());
             //绑定端口  ,开始接收进来的连接
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
             channelFuture.channel().closeFuture().sync();
-        }finally {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }
